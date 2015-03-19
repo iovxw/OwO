@@ -12,7 +12,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-import strutils
+import os, strutils
 import gtk3, glib, gobject
 
 type Emos = seq[tuple[emo: string, tags: seq[string]]]
@@ -46,6 +46,16 @@ proc parseEmos(s: string): Emos =
     es.add((emo: e, tags:t))
   return es
 
+proc btnClicked(widget: Widget, data: gpointer) {.cdecl.} =
+  var btn = Button(widget)
+  btn.clipboard(nil).setText(btn.label, gint(btn.label.len))
+  btn.sensitive = false
+  var buf = $btn.label # 这里转换为string是为了防止gstring导致的乱码
+  btn.label = "已复制到剪贴板"
+  sleep(200)
+  btn.label = buf
+  btn.sensitive = true
+
 var
   i: cint = 0
   a: cstringArray = cast[cstringArray](nil)
@@ -67,7 +77,10 @@ var
   emos = parseEmos(readFile("e.text"))
 
 for i, v in emos:
-  list.packStart(buttonNew(v.emo), GFALSE, GTRUE, 0)
+  var btn = buttonNew(v.emo)
+  list.packStart(btn, GFALSE, GTRUE, 0)
+
+  discard gSignalConnect(btn, "clicked", gCallback(btnClicked), nil)
 
 l.addWithViewport(list)
 
