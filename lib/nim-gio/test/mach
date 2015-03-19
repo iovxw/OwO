@@ -1,0 +1,4 @@
+ln -s ../src/gio.nim
+ln -s ~/nim-glib/src/glib.nim
+ln -s ~/nim-gobject/src/gobject.nim
+

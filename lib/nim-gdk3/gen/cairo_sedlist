@@ -1,0 +1,58 @@
+s/\bcairo_font_type_t\b/cairo.Font_type/g
+s/\bcairo_t\b/cairo_context_t/g
+s/\bptr ptr cairo_rectangle_list_t\b/cairovaaaaarRectangle_list/g
+s/\bptr cairo_rectangle_list_t\b/cairoptttttrRectangle_list/g
+s/\bcairo_rectangle_list_t\b/cairo.Rectangle_listObj/g
+s/\bptr ptr cairo_user_data_key_t\b/cairovaaaaarUser_data_key/g
+s/\bptr cairo_user_data_key_t\b/cairoptttttrUser_data_key/g
+s/\bcairo_user_data_key_t\b/cairo.User_data_keyObj/g
+s/\bptr ptr cairo_rectangle_int_t\b/cairovaaaaarRectangle_int/g
+s/\bptr cairo_rectangle_int_t\b/cairoptttttrRectangle_int/g
+s/\bcairo_rectangle_int_t\b/cairo.Rectangle_intObj/g
+s/\bptr ptr cairo_font_extents_t\b/cairovaaaaarFont_extents/g
+s/\bptr cairo_font_extents_t\b/cairoptttttrFont_extents/g
+s/\bcairo_font_extents_t\b/cairo.Font_extentsObj/g
+s/\bptr ptr cairo_text_cluster_t\b/cairovaaaaarText_cluster/g
+s/\bptr cairo_text_cluster_t\b/cairoptttttrText_cluster/g
+s/\bcairo_text_cluster_t\b/cairo.Text_clusterObj/g
+s/\bptr ptr cairo_font_options_t\b/cairovaaaaarFont_options/g
+s/\bptr cairo_font_options_t\b/cairoptttttrFont_options/g
+s/\bcairo_font_options_t\b/cairo.Font_optionsObj/g
+s/\bptr ptr cairo_text_extents_t\b/cairovaaaaarText_extents/g
+s/\bptr cairo_text_extents_t\b/cairoptttttrText_extents/g
+s/\bcairo_text_extents_t\b/cairo.Text_extentsObj/g
+s/\bptr ptr cairo_scaled_font_t\b/cairovaaaaarScaled_font/g
+s/\bptr cairo_scaled_font_t\b/cairoptttttrScaled_font/g
+s/\bcairo_scaled_font_t\b/cairo.Scaled_fontObj/g
+s/\bptr ptr cairo_rectangle_t\b/cairovaaaaarRectangle/g
+s/\bptr cairo_rectangle_t\b/cairoptttttrRectangle/g
+s/\bcairo_rectangle_t\b/cairo.RectangleObj/g
+s/\bptr ptr cairo_font_face_t\b/cairovaaaaarFont_face/g
+s/\bptr cairo_font_face_t\b/cairoptttttrFont_face/g
+s/\bcairo_font_face_t\b/cairo.Font_faceObj/g
+s/\bptr ptr cairo_context_t\b/cairovaaaaarContext/g
+s/\bptr cairo_context_t\b/cairoptttttrContext/g
+s/\bcairo_context_t\b/cairo.ContextObj/g
+s/\bptr ptr cairo_surface_t\b/cairovaaaaarSurface/g
+s/\bptr cairo_surface_t\b/cairoptttttrSurface/g
+s/\bcairo_surface_t\b/cairo.SurfaceObj/g
+s/\bptr ptr cairo_pattern_t\b/cairovaaaaarPattern/g
+s/\bptr cairo_pattern_t\b/cairoptttttrPattern/g
+s/\bcairo_pattern_t\b/cairo.PatternObj/g
+s/\bptr ptr cairo_matrix_t\b/cairovaaaaarMatrix/g
+s/\bptr cairo_matrix_t\b/cairoptttttrMatrix/g
+s/\bcairo_matrix_t\b/cairo.MatrixObj/g
+s/\bptr ptr cairo_region_t\b/cairovaaaaarRegion/g
+s/\bptr cairo_region_t\b/cairoptttttrRegion/g
+s/\bcairo_region_t\b/cairo.RegionObj/g
+s/\bptr ptr cairo_device_t\b/cairovaaaaarDevice/g
+s/\bptr cairo_device_t\b/cairoptttttrDevice/g
+s/\bcairo_device_t\b/cairo.DeviceObj/g
+s/\bptr ptr cairo_glyph_t\b/cairovaaaaarGlyph/g
+s/\bptr cairo_glyph_t\b/cairoptttttrGlyph/g
+s/\bcairo_glyph_t\b/cairo.GlyphObj/g
+s/\bptr ptr cairo_path_t\b/cairovaaaaarPath/g
+s/\bptr cairo_path_t\b/cairoptttttrPath/g
+s/\bcairo_path_t\b/cairo.PathObj/g
+s/cairovaaaaar/var cairo./g
+s/cairoptttttr/cairo./g

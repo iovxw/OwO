@@ -1,0 +1,7 @@
+cd tmp_gdkpb
+ln -s ~/nim-gio/src/gio.nim
+ln -s ~/nim-glib/src/glib.nim
+ln -s ~/nim-gobject/src/gobject.nim
+nim c gdk_pixbuf.nim
+cd -
+

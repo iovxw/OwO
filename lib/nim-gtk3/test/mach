@@ -1,0 +1,10 @@
+ln -s ../src/gtk3.nim
+ln -s ~/nim-glib/src/glib.nim
+ln -s ~/nim-gio/src/gio.nim
+ln -s ~/nim-atk/src/atk.nim
+ln -s ~/nim-gdk3/src/gdk3.nim
+ln -s ~/nim-gobject/src/gobject.nim
+ln -s ~/nim-cairo/src/cairo.nim
+ln -s ~/nim-pango/src/pango.nim
+ln -s ~/nim-gdk_pixbuf/src/gdk_pixbuf.nim
+nim c -d:release test.nim

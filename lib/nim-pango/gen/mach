@@ -1,0 +1,16 @@
+cd tmp_pango/
+ln -s ~/nim-glib/src/glib.nim
+ln -s ~/nim-gobject/src/gobject.nim
+ln -s ~/nim-cairo/src/cairo.nim
+nim c pango_ot.nim
+nim c pango_cairo.nim
+nim c pango_win32.nim
+nim c pango_xft.nim
+nim c pango_coretext.nim
+nim c pango_ft2.nim
+nim c pango_xft.nim
+nim c pango_fc.nim
+#nim c -d:PANGO_ENABLE_BACKEND -d:PANGO_ENABLE_ENGINE final.nim
+#nim c -d:PANGO_ENABLE_BACKEND  final.nim
+#nim c --d:PANGO_ENABLE_ENGINE final.nim
+cd -
