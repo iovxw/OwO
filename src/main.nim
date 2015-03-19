@@ -12,7 +12,38 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
+import strutils
 import gtk3, glib, gobject
+
+type Emos = seq[tuple[emo: string, tags: seq[string]]]
+
+# 去除首尾空格
+proc remB2ESpace(s: string): string =
+  var ss = s
+  while true:
+    if ss[0] == ' ':
+      ss = ss[1..ss.len-1]
+    elif ss[ss.len-1] == ' ':
+      ss = ss[0..ss.len-2]
+    else:
+      return ss
+
+proc findLast(a:string, item:char): int =
+  var last:int
+  for i in a.items:
+    if i == item:
+      last = result
+    result.inc()
+  result = -1
+  return last
+
+proc parseEmos(s: string): Emos =
+  var es: Emos = @[]
+  for v in s.splitLines():
+    var e = v[0..v.find('[')-1].remB2ESpace()
+    var t = v[v.findLast('[')+1..v.len-2].split()
+    es.add((emo: e, tags:t))
+  return es
 
 var
   i: cint = 0
@@ -28,18 +59,14 @@ window.title = "o(*≧▽≦)ツ"
 window.setSizeRequest(100, 300)
 window.borderWidth = 5
 
-var emoticons :seq[string]
-# TODO: 支持在线和本地读取颜文字列表
-# TODO: 支持颜文字按标签分类
-emoticons = @["(｡・`ω´･)", "o(*≧▽≦)ツ", "≖‿≖✧", "(´･ω･｀)", "(●—●)", "(╯‵□′)╯︵┻━┻", "∑(っ °Д °;)っ", " (ノ｀Д´)ノ┻━┻", "(・∀・)"]
-
 var
   search = entryNew()
   list = boxNew(Orientation.VERTICAL, 0)
   l = scrolledWindowNew(nil, nil)
+  emos = parseEmos(readFile("e.text"))
 
-for i, v in emoticons:
-  list.packStart(buttonNew(v), GFALSE, GTRUE, 0)
+for i, v in emos:
+  list.packStart(buttonNew(v.emo), GFALSE, GTRUE, 0)
 
 l.addWithViewport(list)
 
