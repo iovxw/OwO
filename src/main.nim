@@ -41,7 +41,8 @@ proc parseEmos(s: string): Emos =
   var es: Emos = @[]
   for v in s.splitLines():
     var e = v[0..v.find('[')-1].remB2ESpace()
-    var t = v[v.findLast('[')+1..v.len-2].split()
+    # 此处用findLast是为了防止颜文字中本身含有“[”和“]”
+    var t = v[v.findLast('[')+1..v.findLast('[')-1].split()
     es.add((emo: e, tags:t))
   return es
 
