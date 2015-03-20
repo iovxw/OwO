@@ -49,12 +49,12 @@ proc parseEmos(s: string): Emos =
 proc btnClicked(widget: Widget, data: gpointer) {.cdecl.} =
   var btn = Button(widget)
   btn.clipboard(nil).setText(btn.label, gint(btn.label.len))
-  btn.sensitive = false
-  var buf = $btn.label # 这里转换为string是为了防止gstring导致的乱码
-  btn.label = "已复制到剪贴板"
-  sleep(200)
-  btn.label = buf
-  btn.sensitive = true
+  # btn.sensitive = false
+  # var buf = $btn.label # 这里转换为string是为了防止gstring导致的乱码
+  # btn.label = "已复制到剪贴板"
+  # sleep(200)
+  # btn.label = buf
+  # btn.sensitive = true
 
 var
   i: cint = 0
