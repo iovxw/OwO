@@ -12,10 +12,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-import os, strutils
+import os, strutils, critbits
 import gtk3, glib, gobject
 
-type Emos = seq[tuple[emo: string, tags: seq[string]]]
+type Emos = CritBitTree[tuple[btn: Button, tags: seq[string]]]
 
 # 去除首尾空格
 proc remB2ESpace(s: string): string =
@@ -38,23 +38,13 @@ proc findLast(a:string, item:char): int =
   return last
 
 proc parseEmos(s: string): Emos =
-  var es: Emos = @[]
+  var es: Emos
   for v in s.splitLines():
     var e = v[0..v.find('[')-1].remB2ESpace()
     # 此处用findLast是为了防止颜文字中本身含有“[”和“]”
     var t = v[v.findLast('[')+1..v.findLast('[')-1].split()
-    es.add((emo: e, tags:t))
+    es[e] = (nil,t)
   return es
-
-proc btnClicked(widget: Widget, data: gpointer) {.cdecl.} =
-  var btn = Button(widget)
-  btn.clipboard(nil).setText(btn.label, gint(btn.label.len))
-  # btn.sensitive = false
-  # var buf = $btn.label # 这里转换为string是为了防止gstring导致的乱码
-  # btn.label = "已复制到剪贴板"
-  # sleep(200)
-  # btn.label = buf
-  # btn.sensitive = true
 
 var
   i: cint = 0
@@ -76,9 +66,15 @@ var
   l = scrolledWindowNew(nil, nil)
   emos = parseEmos(readFile("e.text"))
 
-for i, v in emos:
-  var btn = buttonNew(v.emo)
+proc btnClicked(widget: Widget, data: gpointer) {.cdecl.} =
+  var btn = Button(widget)
+  btn.clipboard(nil).setText(btn.label, gint(btn.label.len))
+  window.title = btn.label
+
+for k, v in emos:
+  var btn = buttonNew(k)
   list.packStart(btn, GFALSE, GTRUE, 0)
+  emos[k] = (btn, v.tags) # 记录按钮控件用于以后操作
 
   discard gSignalConnect(btn, "clicked", gCallback(btnClicked), nil)
 
