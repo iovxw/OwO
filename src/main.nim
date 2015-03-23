@@ -15,7 +15,9 @@
 import os, strutils, critbits
 import gtk3, glib, gobject
 
-type Emos = CritBitTree[tuple[btn: Button, tags: seq[string]]]
+type
+  Emos = CritBitTree[tuple[btn: Button, tags: seq[string]]]
+  EIndex = CritBitTree[CritBitTree[int]]
 
 # 去除首尾空格
 proc remB2ESpace(s: string): string =
@@ -46,6 +48,15 @@ proc parseEmos(s: string): Emos =
     es[e] = (nil,t)
   return es
 
+proc parseEIndex(emos: Emos): EIndex =
+  var eIndex:EIndex
+  for emo, v in emos:
+    for tag in v.tags:
+      var buf = eIndex[tag]
+      buf[emo] = 0
+      eIndex[tag] = buf
+  return eIndex
+
 var
   i: cint = 0
   a: cstringArray = cast[cstringArray](nil)
@@ -65,6 +76,7 @@ var
   list = boxNew(Orientation.VERTICAL, 0)
   l = scrolledWindowNew(nil, nil)
   emos = parseEmos(readFile("e.text"))
+  eIndex = parseEIndex(emos)
 
 proc btnClicked(widget: Widget, data: gpointer) {.cdecl.} =
   var btn = Button(widget)
@@ -80,19 +92,14 @@ for k, v in emos:
 
 proc searchEmo(widget: Widget, data: gpointer) {.cdecl.} =
   var text = $search.text
-  if text == "":
+  if text == "" or not eIndex.hasKey(text):
     for k ,v in emos:
       if not v.btn.visible:
         v.btn.visible = true
   else:
-    for k, v in emos:
-      var show: bool
-      for tag in v.tags:
-        if tag == text:
-          show = true
-          break
-
-      if show:
+    for emo, v in emos:
+      # 检查此标签的表情列表中是否含有本表情
+      if eIndex[text].hasKey(emo):
         v.btn.visible = true
       else:
         v.btn.visible = false
