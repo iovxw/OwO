@@ -21,15 +21,12 @@ type
 
 # 去除首尾空格
 proc remB2ESpace(s: string): string =
-  if s == "":
-    return s
-
-  var ss = s
-  while ss[0] == ' ':
-    ss = ss[1..ss.len-1]
-  while ss[ss.len-1] == ' ':
-    ss = ss[0..ss.len-2]
-  return ss
+  var j = s.len-1
+  if j<0: return ""
+  var i = 0
+  while s[i]==' ': i.inc()
+  while s[j]==' ': j.dec()
+  return s[i..j]
 
 proc findLast(a:string, item:char): int =
   var last:int
