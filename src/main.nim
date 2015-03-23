@@ -61,7 +61,7 @@ window.setSizeRequest(100, 300)
 window.borderWidth = 5
 
 var
-  search = entryNew()
+  search = searchEntryNew()
   list = boxNew(Orientation.VERTICAL, 0)
   l = scrolledWindowNew(nil, nil)
   emos = parseEmos(readFile("e.text"))
@@ -77,6 +77,12 @@ for k, v in emos:
   emos[k] = (btn, v.tags) # 记录按钮控件用于以后操作
 
   discard gSignalConnect(btn, "clicked", gCallback(btnClicked), nil)
+
+proc searchEmo(widget: Widget, data: gpointer) {.cdecl.} =
+  echo search.text
+  # TODO: 表情搜索功能
+
+discard gSignalConnect(search, "search-changed", gCallback(searchEmo), nil)
 
 l.addWithViewport(list)
 
