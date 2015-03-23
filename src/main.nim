@@ -23,10 +23,10 @@ type
 proc remB2ESpace(s: string): string =
   var j = s.len-1
   if j == -1: return s # 输入字符串长度为0
-  while s[j] == ' ': j.dec()
-  if j == -1: return "" # 输入字符串为全空格
   var i = 0
   while s[i] == ' ': i.inc()
+  if i < j: # 预防输入纯空格字符串
+    while s[j] == ' ': j.dec()
   return s[i..j]
 
 proc findLast(a:string, item:char): int =
