@@ -92,17 +92,21 @@ for k, v in emos:
 
 proc searchEmo(widget: Widget, data: gpointer) {.cdecl.} =
   var text = $search.text
-  if text == "" or not eIndex.hasKey(text):
+  if text == "":
+    # 显示所有按钮
     for k ,v in emos:
-      if not v.btn.visible:
-        v.btn.visible = true
-  else:
+      v.btn.visible = true
+  elif eIndex.hasKey(text):
     for emo, v in emos:
       # 检查此标签的表情列表中是否含有本表情
       if eIndex[text].hasKey(emo):
         v.btn.visible = true
       else:
         v.btn.visible = false
+  else:
+    # 标签不存在，直接不显示按钮
+    for k, v in emos:
+      v.btn.visible = false
 
 discard gSignalConnect(search, "search-changed", gCallback(searchEmo), nil)
 
