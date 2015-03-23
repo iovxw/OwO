@@ -42,7 +42,7 @@ proc parseEmos(s: string): Emos =
   for v in s.splitLines():
     var e = v[0..v.find('[')-1].remB2ESpace()
     # 此处用findLast是为了防止颜文字中本身含有“[”和“]”
-    var t = v[v.findLast('[')+1..v.findLast('[')-1].split()
+    var t = v[v.findLast('[')+1..v.findLast(']')-1].split()
     es[e] = (nil,t)
   return es
 
@@ -79,8 +79,23 @@ for k, v in emos:
   discard gSignalConnect(btn, "clicked", gCallback(btnClicked), nil)
 
 proc searchEmo(widget: Widget, data: gpointer) {.cdecl.} =
-  echo search.text
-  # TODO: 表情搜索功能
+  var text = $search.text
+  if text == "":
+    for k ,v in emos:
+      if not v.btn.visible:
+        v.btn.visible = true
+  else:
+    for k, v in emos:
+      var show: bool
+      for tag in v.tags:
+        if tag == text:
+          show = true
+          break
+
+      if show:
+        v.btn.visible = true
+      else:
+        v.btn.visible = false
 
 discard gSignalConnect(search, "search-changed", gCallback(searchEmo), nil)
 
