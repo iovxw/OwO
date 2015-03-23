@@ -22,10 +22,11 @@ type
 # 去除首尾空格
 proc remB2ESpace(s: string): string =
   var j = s.len-1
-  if j<0: return ""
+  if j == -1: return s # 输入字符串长度为0
+  while s[j] == ' ': j.dec()
+  if j == -1: return "" # 输入字符串为全空格
   var i = 0
-  while s[i]==' ': i.inc()
-  while s[j]==' ': j.dec()
+  while s[i] == ' ': i.inc()
   return s[i..j]
 
 proc findLast(a:string, item:char): int =
