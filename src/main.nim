@@ -19,24 +19,14 @@ type
   Emos = CritBitTree[tuple[btn: Button, tags: seq[string]]]
   EIndex = CritBitTree[CritBitTree[int]]
 
-# 去除首尾空格
-proc remB2ESpace(s: string): string =
-  var j = s.len-1
-  if j == -1: return # 输入字符串长度为0
-  var i = 0
-  while s[i] == ' ': i.inc()
-  if i < j: # 预防输入纯空格字符串
-    while s[j] == ' ': j.dec()
-  result = s[i..j]
-
 proc findLast(a:string, item:char): int =
-  for i, v in a:
-    if v == item:
-      result = i
+  for i in countdown(a.len-1, 0):
+    if a[i] == item:
+      return i
 
 proc parseEmos(s: string): Emos =
   for v in s.splitLines():
-    var e = v[0..v.find('[')-1].remB2ESpace()
+    var e = v[0..v.find('[')-1].strip()
     # 此处用findLast是为了防止颜文字中本身含有“[”和“]”
     var t = v[v.findLast('[')+1..v.findLast(']')-1].split()
     result[e] = (nil,t)
