@@ -22,12 +22,12 @@ type
 # 去除首尾空格
 proc remB2ESpace(s: string): string =
   var j = s.len-1
-  if j == -1: return s # 输入字符串长度为0
+  if j == -1: return # 输入字符串长度为0
   var i = 0
   while s[i] == ' ': i.inc()
   if i < j: # 预防输入纯空格字符串
     while s[j] == ' ': j.dec()
-  return s[i..j]
+  result = s[i..j]
 
 proc findLast(a:string, item:char): int =
   for i, v in a:
@@ -35,22 +35,18 @@ proc findLast(a:string, item:char): int =
       result = i
 
 proc parseEmos(s: string): Emos =
-  var es: Emos
   for v in s.splitLines():
     var e = v[0..v.find('[')-1].remB2ESpace()
     # 此处用findLast是为了防止颜文字中本身含有“[”和“]”
     var t = v[v.findLast('[')+1..v.findLast(']')-1].split()
-    es[e] = (nil,t)
-  return es
+    result[e] = (nil,t)
 
 proc parseEIndex(emos: Emos): EIndex =
-  var eIndex:EIndex
   for emo, v in emos:
     for tag in v.tags:
-      var buf = eIndex[tag]
+      var buf = result[tag]
       buf[emo] = 0
-      eIndex[tag] = buf
-  return eIndex
+      result[tag] = buf
 
 var
   i: cint = 0
