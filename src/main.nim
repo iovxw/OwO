@@ -30,13 +30,9 @@ proc remB2ESpace(s: string): string =
   return s[i..j]
 
 proc findLast(a:string, item:char): int =
-  var last:int
-  for i in a.items:
-    if i == item:
-      last = result
-    result.inc()
-  result = -1
-  return last
+  for i, v in a:
+    if v == item:
+      result = i
 
 proc parseEmos(s: string): Emos =
   var es: Emos
