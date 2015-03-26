@@ -25,7 +25,7 @@ case "$1" in
     ln -s ../lib/nim-gdk_pixbuf/src/gdk_pixbuf.nim
 
     cp ../src/main.nim main.nim
-    nim c -d:release main.nim
+    nim c --threads:on -d:release main.nim
 
     cd ..
     mkdir bin

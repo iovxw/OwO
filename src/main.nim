@@ -12,7 +12,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-import os, strutils, critbits
+import os, strutils, critbits, threadpool
 import gtk3, glib, gobject
 
 type
@@ -59,10 +59,19 @@ var
   emos = parseEmos(readFile("e.text"))
   eIndex = parseEIndex(emos)
 
+proc changeBackLabel(btn: Button, label: string) =
+  sleep(450)
+  btn.label = label
+  btn.sensitive = true
+
 proc btnClicked(widget: Widget, data: gpointer) {.cdecl.} =
   var btn = Button(widget)
   btn.clipboard(nil).setText(btn.label, gint(btn.label.len))
   window.title = btn.label
+  btn.sensitive = false
+  let label = $btn.label
+  btn.label = "已复制到剪贴板"
+  spawn changeBackLabel(btn, label)
 
 for k, v in emos:
   var btn = buttonNew(k)
